@@ -1,0 +1,905 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1">
+
+<meta name="theme-color" content="#173c59">
+
+<meta name="description"
+      content="Portal Pemantauan Penyertaan Jabatan dan Agensi">
+
+<title>Portal Pemantauan Penyertaan</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet">
+
+
+<style>
+
+/* ==================================================
+   ROOT
+================================================== */
+
+:root {
+
+  --primary: #173c59;
+  --primary-dark: #102d45;
+  --primary-light: #285b7e;
+
+  --background: #f3f6f9;
+  --surface: #ffffff;
+
+  --text: #263746;
+  --muted: #82909d;
+
+  --border: #e4eaf0;
+
+  --success: #198754;
+
+}
+
+
+/* ==================================================
+   RESET
+================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+
+  font-family: 'Inter', sans-serif;
+
+  background: var(--background);
+
+  color: var(--text);
+
+  overflow: hidden;
+
+}
+
+
+/* ==================================================
+   MAIN APPLICATION
+================================================== */
+
+.app-container {
+
+  height: 100dvh;
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+
+/* ==================================================
+   HEADER
+================================================== */
+
+.header {
+
+  height: 76px;
+
+  min-height: 76px;
+
+  background: var(--primary);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 30px;
+
+  color: white;
+
+  position: relative;
+
+  z-index: 10;
+
+  box-shadow: 0 3px 12px rgba(0,0,0,.08);
+
+}
+
+
+.brand {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+}
+
+
+.brand-logo {
+
+  width: 43px;
+
+  height: 43px;
+
+  background: rgba(255,255,255,.12);
+
+  border: 1px solid rgba(255,255,255,.15);
+
+  border-radius: 10px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 21px;
+
+}
+
+
+.brand-title {
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: .5px;
+
+}
+
+
+.brand-subtitle {
+
+  font-size: 10px;
+
+  opacity: .7;
+
+  margin-top: 4px;
+
+}
+
+
+/* ==================================================
+   HEADER ACTIONS
+================================================== */
+
+.header-actions {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+}
+
+
+.header-btn {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 9px 13px;
+
+  border: 1px solid rgba(255,255,255,.22);
+
+  border-radius: 7px;
+
+  color: white;
+
+  background: rgba(255,255,255,.08);
+
+  text-decoration: none;
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: .2s;
+
+}
+
+
+.header-btn:hover {
+
+  background: rgba(255,255,255,.18);
+
+  color: white;
+
+}
+
+
+.header-btn.primary {
+
+  background: white;
+
+  color: var(--primary);
+
+  border-color: white;
+
+}
+
+
+.header-btn.primary:hover {
+
+  background: #eaf1f6;
+
+}
+
+
+/* ==================================================
+   STATUS INDICATOR
+================================================== */
+
+.system-status {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  font-size: 10px;
+
+  color: rgba(255,255,255,.85);
+
+  margin-right: 10px;
+
+}
+
+
+.status-dot {
+
+  width: 7px;
+
+  height: 7px;
+
+  background: #5cdb99;
+
+  border-radius: 50%;
+
+  box-shadow: 0 0 8px rgba(92,219,153,.6);
+
+}
+
+
+/* ==================================================
+   DASHBOARD AREA
+================================================== */
+
+.dashboard-wrapper {
+
+  flex: 1;
+
+  min-height: 0;
+
+  position: relative;
+
+  background: var(--background);
+
+  padding: 12px;
+
+}
+
+
+.dashboard-frame {
+
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  border: none;
+
+  background: white;
+
+  border-radius: 8px;
+
+  box-shadow: 0 2px 12px rgba(20,40,60,.06);
+
+}
+
+
+/* ==================================================
+   LOADING SCREEN
+================================================== */
+
+.loading-screen {
+
+  position: absolute;
+
+  inset: 12px;
+
+  z-index: 5;
+
+  background: white;
+
+  border-radius: 8px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-direction: column;
+
+  transition: opacity .35s ease;
+
+}
+
+
+.loading-screen.hidden {
+
+  opacity: 0;
+
+  pointer-events: none;
+
+}
+
+
+.loading-logo {
+
+  width: 65px;
+
+  height: 65px;
+
+  background: #eaf2f8;
+
+  border-radius: 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: var(--primary);
+
+  font-size: 30px;
+
+  margin-bottom: 22px;
+
+}
+
+
+.loading-title {
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  margin-bottom: 7px;
+
+}
+
+
+.loading-description {
+
+  font-size: 11px;
+
+  color: var(--muted);
+
+}
+
+
+.loading-spinner {
+
+  width: 27px;
+
+  height: 27px;
+
+  border: 3px solid #e5ebf0;
+
+  border-top-color: var(--primary-light);
+
+  border-radius: 50%;
+
+  animation: spin .8s linear infinite;
+
+  margin-bottom: 20px;
+
+}
+
+
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.footer {
+
+  height: 32px;
+
+  min-height: 32px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 25px;
+
+  background: white;
+
+  border-top: 1px solid var(--border);
+
+  color: var(--muted);
+
+  font-size: 9px;
+
+}
+
+
+.footer-right {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media(max-width:768px) {
+
+  .header {
+
+    height: 64px;
+
+    min-height: 64px;
+
+    padding: 0 13px;
+
+  }
+
+  .brand {
+
+    gap: 9px;
+
+  }
+
+  .brand-logo {
+
+    width: 37px;
+
+    height: 37px;
+
+    font-size: 18px;
+
+  }
+
+  .brand-title {
+
+    font-size: 10px;
+
+  }
+
+  .brand-subtitle {
+
+    font-size: 8px;
+
+  }
+
+  .header-actions {
+
+    gap: 5px;
+
+  }
+
+  .header-btn {
+
+    padding: 9px;
+
+    font-size: 0;
+
+  }
+
+  .header-btn i {
+
+    font-size: 15px;
+
+  }
+
+  .system-status {
+
+    display: none;
+
+  }
+
+  .dashboard-wrapper {
+
+    padding: 5px;
+
+  }
+
+  .loading-screen {
+
+    inset: 5px;
+
+  }
+
+  .footer {
+
+    padding: 0 10px;
+
+    font-size: 8px;
+
+  }
+
+}
+
+
+/* ==================================================
+   SMALL MOBILE
+================================================== */
+
+@media(max-width:380px) {
+
+  .brand-subtitle {
+
+    display: none;
+
+  }
+
+  .brand-title {
+
+    max-width: 145px;
+
+    line-height: 1.4;
+
+  }
+
+  .footer-right {
+
+    display: none;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app-container">
+
+
+  <!-- HEADER -->
+
+  <header class="header">
+
+
+    <div class="brand">
+
+      <div class="brand-logo">
+
+        <i class="bi bi-bar-chart-line-fill"></i>
+
+      </div>
+
+
+      <div>
+
+        <div class="brand-title">
+
+          PORTAL PEMANTAUAN PENYERTAAN
+
+        </div>
+
+        <div class="brand-subtitle">
+
+          Sistem Pengurusan dan Analisis Penyertaan
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+
+      <div class="system-status">
+
+        <span class="status-dot"></span>
+
+        <span>Portal Dashboard</span>
+
+      </div>
+
+
+      <button class="header-btn"
+              onclick="reloadDashboard()"
+              title="Muat semula dashboard">
+
+        <i class="bi bi-arrow-clockwise"></i>
+
+        Muat Semula
+
+      </button>
+
+
+      <button class="header-btn"
+              onclick="toggleFullscreen()"
+              title="Paparan skrin penuh">
+
+        <i class="bi bi-fullscreen"></i>
+
+        Skrin Penuh
+
+      </button>
+
+
+      <a class="header-btn primary"
+         id="openDashboard"
+         href="#"
+         target="_blank"
+         rel="noopener">
+
+        <i class="bi bi-box-arrow-up-right"></i>
+
+        Buka Dashboard
+
+      </a>
+
+
+    </div>
+
+
+  </header>
+
+
+
+  <!-- DASHBOARD IFRAME -->
+
+  <main class="dashboard-wrapper">
+
+
+    <div class="loading-screen" id="loadingScreen">
+
+
+      <div class="loading-logo">
+
+        <i class="bi bi-bar-chart-line-fill"></i>
+
+      </div>
+
+
+      <div class="loading-spinner"></div>
+
+
+      <div class="loading-title">
+
+        Memuatkan Dashboard Penyertaan
+
+      </div>
+
+
+      <div class="loading-description">
+
+        Sila tunggu sebentar sementara sistem disediakan.
+
+      </div>
+
+
+    </div>
+
+
+    <iframe
+
+      id="dashboardFrame"
+
+      class="dashboard-frame"
+
+      title="Dashboard Pemantauan Penyertaan"
+
+      loading="eager"
+
+      allow="fullscreen"
+
+      allowfullscreen>
+
+    </iframe>
+
+
+  </main>
+
+
+
+  <!-- FOOTER -->
+
+  <footer class="footer">
+
+
+    <div>
+
+      © 2026 | PORTAL PEMANTAUAN PENYERTAAN
+
+    </div>
+
+
+    <div class="footer-right">
+
+      <i class="bi bi-shield-check"></i>
+
+      <span>Dashboard rasmi berasaskan Google Apps Script</span>
+
+    </div>
+
+
+  </footer>
+
+
+</div>
+
+
+
+<script>
+
+/* ==================================================
+   GOOGLE APPS SCRIPT DEPLOYMENT URL
+================================================== */
+
+const DASHBOARD_URL =
+  'https://script.google.com/macros/s/AKfycbzenFvE1EDm4tn1jn5ryIPfI8SBIxLAncbyYY_3N1pcIj35lABRAdOLwmLZQVbJSf0R/exec';
+
+
+/* ==================================================
+   INITIALIZE
+================================================== */
+
+const frame = document.getElementById('dashboardFrame');
+
+const loader = document.getElementById('loadingScreen');
+
+const openButton = document.getElementById('openDashboard');
+
+
+/* ==================================================
+   LOAD DASHBOARD
+================================================== */
+
+function loadDashboard() {
+
+  loader.classList.remove('hidden');
+
+  frame.src = 'about:blank';
+
+  setTimeout(function() {
+
+    frame.src = DASHBOARD_URL;
+
+  }, 100);
+
+  openButton.href = DASHBOARD_URL;
+
+}
+
+
+/* ==================================================
+   IFRAME LOADED
+================================================== */
+
+frame.addEventListener('load', function() {
+
+  if (frame.src !== 'about:blank') {
+
+    setTimeout(function() {
+
+      loader.classList.add('hidden');
+
+    }, 500);
+
+  }
+
+});
+
+
+/* ==================================================
+   RELOAD DASHBOARD
+================================================== */
+
+function reloadDashboard() {
+
+  loader.classList.remove('hidden');
+
+  frame.src = DASHBOARD_URL + '?refresh=' + Date.now();
+
+}
+
+
+/* ==================================================
+   FULLSCREEN
+================================================== */
+
+function toggleFullscreen() {
+
+  const wrapper = document.querySelector('.dashboard-wrapper');
+
+  if (!document.fullscreenElement) {
+
+    wrapper.requestFullscreen().catch(function(error) {
+
+      console.error('Fullscreen error:', error);
+
+    });
+
+  } else {
+
+    document.exitFullscreen();
+
+  }
+
+}
+
+
+/* ==================================================
+   INITIAL LOAD
+================================================== */
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  loadDashboard();
+
+});
+
+</script>
+
+
+</body>
+
+</html>
